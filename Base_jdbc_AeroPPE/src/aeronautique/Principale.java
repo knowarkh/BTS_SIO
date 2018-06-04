@@ -18,6 +18,7 @@ public class Principale {
 	//Passer la constante INIT à true pour lancer les scripts de création de tables
 	static boolean INIT = false;
 	
+	//bonjour
 	public static void main(String[] args) {
 		
 		if(INIT){
