@@ -21,7 +21,7 @@ import controleur.swing.UpdatePilote;
 import dao.Connexion;
 import ihm.swing.JTableRenderer;
 
-public class OngletPilote extends JTabbedPane implements ActionListener {
+public class OngletPilote extends JTabbedPane {
 
 	private static final long serialVersionUID = 1L;
 
@@ -118,8 +118,4 @@ public class OngletPilote extends JTabbedPane implements ActionListener {
 		return southPilote;
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-	}
-
 }

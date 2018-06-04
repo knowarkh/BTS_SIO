@@ -21,7 +21,7 @@ import controleur.swing.UpdateAvion;
 import dao.Connexion;
 import ihm.swing.JTableRenderer;
 
-public class OngletAvion extends JTabbedPane implements ActionListener {
+public class OngletAvion extends JTabbedPane {
 
 	private static final long serialVersionUID = 1L;
 
@@ -123,10 +123,6 @@ public class OngletAvion extends JTabbedPane implements ActionListener {
 		};
 		modifier.addActionListener(alModif);
 		return southAvion;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
 	}
 
 }

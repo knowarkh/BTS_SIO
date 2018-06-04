@@ -21,7 +21,7 @@ import controleur.swing.UpdateVol;
 import dao.Connexion;
 import ihm.swing.JTableRenderer;
 
-public class OngletVol extends JTabbedPane implements ActionListener {
+public class OngletVol extends JTabbedPane {
 
 
 	private static final long serialVersionUID = 1L;
@@ -124,7 +124,4 @@ public class OngletVol extends JTabbedPane implements ActionListener {
 		return southVol;
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-	}
 }
