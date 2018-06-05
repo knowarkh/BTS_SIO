@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controleur.ControleurSwing;
+import ihm.swing.onglet.OngletVol;
 
 public class DeleteVol extends JFrame {
 
@@ -35,7 +36,7 @@ public class DeleteVol extends JFrame {
 		Font police = new Font("Tahoma", Font.BOLD, 14);
 		jtf.setFont(police);
 		jtf.setPreferredSize(new Dimension(150, 30));
-		b.addActionListener(new BoutonListener());
+		b.addActionListener(new BoutonListener(this));
 		top.add(label);
 		top.add(jtf);
 		top.add(b);
@@ -46,9 +47,15 @@ public class DeleteVol extends JFrame {
 
 	}
 	class BoutonListener implements ActionListener{
+		DeleteVol fenetre = null; 
+		public BoutonListener(DeleteVol deleteVol) {
+			fenetre = deleteVol;
+		}
 	    public void actionPerformed(ActionEvent e) {
+	    	fenetre.dispose();
 	      int id = Integer.parseInt(jtf.getText());
 	      ControleurSwing.getInstance().delVol(id);
+	      OngletVol.getInstance().afficherSelect();
 	    }
 	  }
 }

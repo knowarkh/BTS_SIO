@@ -11,7 +11,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,18 +20,28 @@ import controleur.swing.UpdateAvion;
 import dao.Connexion;
 import ihm.swing.JTableRenderer;
 
-public class OngletAvion extends JTabbedPane {
+public class OngletAvion extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public static JPanel CreerOngletAvion() {
-		JPanel jpanelTableAv = new JPanel(new BorderLayout());
-		jpanelTableAv.add(panelOngletAvion(jpanelTableAv));		
-		return jpanelTableAv;
-	}
+	private static OngletAvion instance = null;
+	private JTable table = null; 
+
+	public static OngletAvion getInstance() {
+		if (instance==null) {
+			instance=new OngletAvion();
+		}
+		return instance;
+	}	
 	
-	//---Méthodes à créer dans la DAO pour ne pas avoir de requetes ici---
-	private static JScrollPane panelOngletAvion(JPanel jpanelTableAv) {
+	private OngletAvion() {
+		super();
+		this.setLayout(new BorderLayout());
+		this.creerOngletAvion();
+		this.creerBoutonsAvion();
+	}
+
+	public void afficherSelect() {
 		String sql1 = "SELECT COUNT(*) as nbLignes FROM AVION";
 		ResultSet rs1 = Connexion.executeQuery(sql1);
 		int nbLignes = 0;
@@ -65,17 +74,28 @@ public class OngletAvion extends JTabbedPane {
 			e.printStackTrace();
 		}
 		DefaultTableModel model = new DefaultTableModel(dicoAv, colonnes);
-		JTable table = new JTable(model);
+		table.setModel(model);
+	}
+	
+	public void creerOngletAvion() {
+		JPanel jpanelTableAv = new JPanel(new BorderLayout());
+		this.creerPanelOngletAvion(jpanelTableAv);
+		this.add(jpanelTableAv);
+	}
+	
+	private void creerPanelOngletAvion(JPanel jpanelTableAv) {
+		table = new JTable();
 		table.setShowGrid(true);
 		table.setShowVerticalLines(true);
 		table.setDefaultRenderer(Object.class, new JTableRenderer());
 		table.setAutoCreateRowSorter(true);
+		this.afficherSelect();
 		JScrollPane pane = new JScrollPane(table);
-		return pane;
+		jpanelTableAv.add(pane);		
 	}
 
 	//Boutons pied de page :
-	public static JPanel creerBoutonAvion() {
+	public void creerBoutonsAvion() {
 		JButton rechercher = new JButton("Rechercher");
 		JButton ajouter = new JButton("Ajouter");
 		JButton supprimer = new JButton("Supprimer");
@@ -122,7 +142,7 @@ public class OngletAvion extends JTabbedPane {
 			}
 		};
 		modifier.addActionListener(alModif);
-		return southAvion;
+		this.add(southAvion, BorderLayout.SOUTH);
 	}
 
 }

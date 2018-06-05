@@ -11,7 +11,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,13 +20,28 @@ import controleur.swing.UpdateVol;
 import dao.Connexion;
 import ihm.swing.JTableRenderer;
 
-public class OngletVol extends JTabbedPane {
-
+public class OngletVol extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public static JPanel CreerOngletVol() {
-		JPanel jpanelTableVol = new JPanel(new BorderLayout());
+	private static OngletVol instance = null;
+	private JTable table = null; 
+
+	public static OngletVol getInstance() {
+		if (instance==null) {
+			instance=new OngletVol();
+		}
+		return instance;
+	}
+	
+	private OngletVol() {
+		super();
+		this.setLayout(new BorderLayout());
+		this.creerOngletVol();
+		this.creerBoutonsVol();
+	}
+	
+	public void afficherSelect() {
 		String sql3 = "SELECT COUNT(*) as nbLignes FROM VOL";
 		ResultSet rs3 = Connexion.executeQuery(sql3);
 		int nbLignes = 0;
@@ -64,18 +78,28 @@ public class OngletVol extends JTabbedPane {
 			e.printStackTrace();
 		}
 		DefaultTableModel model = new DefaultTableModel(dicoVol, colonnes);
-		JTable table = new JTable(model);
+		table.setModel(model);
+	}
+	
+	public void creerOngletVol() {
+		JPanel jpanelTableVol = new JPanel(new BorderLayout());
+		this.creerPanelOngletVol(jpanelTableVol);
+		this.add(jpanelTableVol);
+	}
+	
+	private void creerPanelOngletVol(JPanel jpanelTableVol) {
+		table = new JTable();
 		table.setShowGrid(true);
 		table.setShowVerticalLines(true);
 		table.setDefaultRenderer(Object.class, new JTableRenderer());
 		table.setAutoCreateRowSorter(true);
+		this.afficherSelect();
 		JScrollPane pane = new JScrollPane(table);
 		jpanelTableVol.add(pane);
-		return jpanelTableVol;
 	}
 	
 	//boutons pied de page :
-	public static JPanel creerBoutonVol() {
+	public void creerBoutonsVol() {
 		JButton rechercher = new JButton("Rechercher");
 		JButton ajouter = new JButton("Ajouter");
 		JButton supprimer = new JButton("Supprimer");
@@ -121,7 +145,7 @@ public class OngletVol extends JTabbedPane {
 			}
 		};
 		modifier.addActionListener(alModif);
-		return southVol;
+		this.add(southVol, BorderLayout.SOUTH);
 	}
 	
 }

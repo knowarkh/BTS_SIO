@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controleur.ControleurSwing;
+import ihm.swing.onglet.OngletVol;
 
 public class CreateVol extends JFrame {
 
@@ -45,7 +46,7 @@ public class CreateVol extends JFrame {
 		textField.setBounds(125, 20, 135, 30);
 		panel.add(textField);
 		textField.setColumns(10);
-		
+
 		textField_1 = new JTextField();
 		textField_1.setBounds(125, 60, 135, 30);
 		panel.add(textField_1);
@@ -97,21 +98,28 @@ public class CreateVol extends JFrame {
 		textField_7.setBounds(355, 260, 150, 30);
 		panel.add(textField_7);
 		textField_7.setColumns(10);
-		
+
 		JButton btnNewButton = new JButton("OK");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int idPil = Integer.parseInt(textField.getText());
-				int idAv = Integer.parseInt(textField_1.getText());
-				String ville_Dep = textField_2.getText();
-				String ville_Arr = textField_3.getText();
-				String h_Dep = textField_4.getText();
-				String h_Arr = textField_5.getText();
-				ControleurSwing.getInstance().creerVol(idPil, idAv, ville_Dep, ville_Arr, h_Dep, h_Arr);
-			}
-		}
-		);
+		btnNewButton.addActionListener(new BoutonListener(this));
 		btnNewButton.setBounds(355, 65, 90, 25);
 		panel.add(btnNewButton);
+	}
+
+	class BoutonListener implements ActionListener{
+		CreateVol fenetre = null; 
+		public BoutonListener(CreateVol createVol) {
+			fenetre = createVol;
+		}
+		public void actionPerformed(ActionEvent e) {
+			fenetre.dispose();
+			int idPil = Integer.parseInt(textField.getText());
+			int idAv = Integer.parseInt(textField_1.getText());
+			String ville_Dep = textField_2.getText();
+			String ville_Arr = textField_3.getText();
+			String h_Dep = textField_4.getText();
+			String h_Arr = textField_5.getText();
+			ControleurSwing.getInstance().creerVol(idPil, idAv, ville_Dep, ville_Arr, h_Dep, h_Arr);
+			OngletVol.getInstance().afficherSelect();
+		}
 	}
 }

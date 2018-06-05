@@ -11,7 +11,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,12 +20,28 @@ import controleur.swing.UpdatePilote;
 import dao.Connexion;
 import ihm.swing.JTableRenderer;
 
-public class OngletPilote extends JTabbedPane {
+public class OngletPilote extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static OngletPilote instance = null;
+	private JTable table = null; 
 
-	public static JPanel CreerOngletPilote() {
-		JPanel jpanelTablePil = new JPanel(new BorderLayout());
+	public static OngletPilote getInstance() {
+		if (instance==null) {
+			instance=new OngletPilote();
+		}
+		return instance;
+	}	
+	
+	private OngletPilote() {
+		super();
+		this.setLayout(new BorderLayout());
+		this.creerOngletPilote();
+		this.creerBoutonsPilote();
+	}
+
+	public void afficherSelect() {
 		String sql2 = "SELECT COUNT(*) as nbLignes FROM PILOTE";
 		ResultSet rs2 = Connexion.executeQuery(sql2);
 		int nbLignes = 0;
@@ -57,18 +72,28 @@ public class OngletPilote extends JTabbedPane {
 			e.printStackTrace();
 		}
 		DefaultTableModel model = new DefaultTableModel(dicoPil, colonnes);
-		JTable table = new JTable(model);
+		table.setModel(model);
+	}
+	
+	public void creerOngletPilote() {
+		JPanel jpanelTablePil = new JPanel(new BorderLayout());
+		this.creerPanelOngletPilote(jpanelTablePil);
+		this.add(jpanelTablePil);
+	}
+	
+	private void creerPanelOngletPilote(JPanel jpanelTablePil) {
+		table = new JTable();
 		table.setShowGrid(true);
 		table.setShowVerticalLines(true);
 		table.setDefaultRenderer(Object.class, new JTableRenderer());
 		table.setAutoCreateRowSorter(true);
+		this.afficherSelect();
 		JScrollPane pane = new JScrollPane(table);
 		jpanelTablePil.add(pane);
-		return jpanelTablePil;
 	}
 	
 	//boutons pied de page :
-	public static JPanel creerBoutonPilote() {
+	public void creerBoutonsPilote() {
 		JButton rechercher = new JButton("Rechercher");
 		JButton ajouter = new JButton("Ajouter");
 		JButton supprimer = new JButton("Supprimer");
@@ -89,7 +114,6 @@ public class OngletPilote extends JTabbedPane {
 		ActionListener alRecherche = new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {	
-				//à finaliser
 				//new FindPilote();
 			}
 		};
@@ -115,7 +139,6 @@ public class OngletPilote extends JTabbedPane {
 			}
 		};
 		modifier.addActionListener(alModif);
-		return southPilote;
+		this.add(southPilote, BorderLayout.SOUTH);
 	}
-	
 }

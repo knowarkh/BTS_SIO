@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controleur.ControleurSwing;
+import ihm.swing.onglet.OngletAvion;
 
 public class CreateAvion extends JFrame {
 
@@ -45,7 +46,7 @@ public class CreateAvion extends JFrame {
 		jtf1.setPreferredSize(new Dimension(150, 30));
 		jtf2.setFont(police);
 		jtf2.setPreferredSize(new Dimension(150, 30));
-		bouton.addActionListener(new BoutonListener());
+		bouton.addActionListener(new BoutonListener(this));
 		pan.add(label);
 		pan.add(jtf);
 		pan.add(label1);
@@ -59,14 +60,18 @@ public class CreateAvion extends JFrame {
 	}
 
 	class BoutonListener implements ActionListener{
+		CreateAvion fenetre = null; 
+		public BoutonListener(CreateAvion createAvion) {
+			fenetre = createAvion;
+		}
 		public void actionPerformed(ActionEvent e) {
+			fenetre.dispose();
 			String nomAv = jtf.getText();
 			int capacite = Integer.parseInt(jtf1.getText());
 			String loc = jtf2.getText();
 			ControleurSwing.getInstance().creerAvion(nomAv, capacite, loc);
+			OngletAvion.getInstance().afficherSelect();
 			//MessageBox -> réussi + avion to_string
-			//FenetreAero.refresh();
-				//-> OngletAvion 
 		}
 	}
 }

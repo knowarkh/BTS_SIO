@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controleur.ControleurSwing;
+import ihm.swing.onglet.OngletPilote;
 
 public class CreatePilote extends JFrame {
 
@@ -45,7 +46,7 @@ public class CreatePilote extends JFrame {
 		jtf1.setPreferredSize(new Dimension(150, 30));
 		jtf2.setFont(police);
 		jtf2.setPreferredSize(new Dimension(150, 30));
-		bouton.addActionListener(new BoutonListener());
+		bouton.addActionListener(new BoutonListener(this));
 		pan.add(label);
 		pan.add(jtf);
 		pan.add(label1);
@@ -59,12 +60,17 @@ public class CreatePilote extends JFrame {
 	}
 
 	class BoutonListener implements ActionListener{
+		CreatePilote fenetre = null; 
+		public BoutonListener(CreatePilote createPilote) {
+			fenetre = createPilote;
+		}
 		public void actionPerformed(ActionEvent e) {
+			fenetre.dispose();
 			String nom = jtf.getText();
 			String adr = jtf1.getText();
 			int sal = Integer.parseInt(jtf2.getText());
 			ControleurSwing.getInstance().creerPilote(nom, adr, sal);
-			//fenêtre info
+			OngletPilote.getInstance().afficherSelect();
 		}
 	}
 }

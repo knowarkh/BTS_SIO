@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controleur.ControleurSwing;
+import ihm.swing.onglet.OngletAvion;
 
 public class UpdateAvion extends JFrame {
 
@@ -67,17 +68,26 @@ public class UpdateAvion extends JFrame {
 		textField_3.setColumns(10);
 
 		JButton btnNewButton = new JButton("Mettre à jour");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int id = Integer.parseInt(textField.getText());
-				int cap = Integer.parseInt(textField_2.getText());
-				String nom = textField_1.getText();
-				String loc = textField_3.getText();
-				ControleurSwing.getInstance().updAvion(id, nom, cap, loc);
-			}
-		});
+		btnNewButton.addActionListener(new BoutonListener(this));
 		btnNewButton.setBounds(170, 250, 130, 25);
 		contentPane.add(btnNewButton);
 		this.setVisible(true);
+	}
+	
+	class BoutonListener implements ActionListener{
+		UpdateAvion fenetre = null; 
+		public BoutonListener(UpdateAvion updateAvion) {
+			fenetre = updateAvion;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			fenetre.dispose();
+			int id = Integer.parseInt(textField.getText());
+			int cap = Integer.parseInt(textField_2.getText());
+			String nom = textField_1.getText();
+			String loc = textField_3.getText();
+			ControleurSwing.getInstance().updAvion(id, nom, cap, loc);
+			OngletAvion.getInstance().afficherSelect();
+		}
 	}
 }

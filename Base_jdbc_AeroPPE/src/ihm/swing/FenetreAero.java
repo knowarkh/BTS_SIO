@@ -1,6 +1,5 @@
 package ihm.swing;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -9,8 +8,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
@@ -32,8 +29,6 @@ public class FenetreAero extends JFrame {
 	private static final int LARGEUR = (int)TAILLE_ECRAN.getWidth()*3/4;
 	
 	
-	private JPanel ongletAvion = new JPanel();
-
 	public FenetreAero() {
 		super("AeroBase v1.0");
 		//Ici on crée un nouvel objet et on extends directement la class en faisant comme un overide après les crochets :
@@ -63,34 +58,21 @@ public class FenetreAero extends JFrame {
 		onglets.addTab("ACCUEIL", OngletAccueil.CreerOngletAccueil());
 		
 		//onglet Avion :
-		JPanel onglet1 = new JPanel();
-		onglet1.setLayout(new BorderLayout());
-		ongletAvion = OngletAvion.CreerOngletAvion();
-		onglet1.add(ongletAvion);
-		onglet1.add(OngletAvion.creerBoutonAvion(), BorderLayout.SOUTH);
-		onglets.addTab("AVION", onglet1);
+		onglets.addTab("AVION", OngletAvion.getInstance());
 		
-		//onglet pilote :
-		JPanel onglet2 = new JPanel();
-		onglet2.setLayout(new BorderLayout());
-		onglet2.add(OngletPilote.CreerOngletPilote());
-	    onglet2.add(OngletPilote.creerBoutonPilote(), BorderLayout.SOUTH);
-		onglets.addTab("PILOTE", onglet2);
+		//onglet Pilote :
+		onglets.addTab("PILOTE", OngletPilote.getInstance());
 
-		//onglet vol :
-		JPanel onglet3 = new JPanel();
-		onglet3.setLayout(new BorderLayout());
-		onglet3.add(OngletVol.CreerOngletVol());
-		onglet3.add(OngletVol.creerBoutonVol(), BorderLayout.SOUTH);
-		onglets.addTab("VOL", onglet3);
+		//onglet Vol :
+		onglets.addTab("VOL", OngletVol.getInstance());
 		
 		//onglet statistiques : requêtes à faire
-		JPanel ongletStats = new JPanel();
-		ongletStats.setLayout(new BorderLayout());
-		JLabel temp = new JLabel("En cours de développement");
-		temp.setHorizontalAlignment(JLabel.CENTER);
-		ongletStats.add(temp, BorderLayout.NORTH);
-		onglets.addTab("STATISTIQUES", ongletStats);
+//		JPanel ongletStats = new JPanel();
+//		ongletStats.setLayout(new BorderLayout());
+//		JLabel temp = new JLabel("En cours de développement");
+//		temp.setHorizontalAlignment(JLabel.CENTER);
+//		ongletStats.add(temp, BorderLayout.NORTH);
+//		onglets.addTab("STATISTIQUES", ongletStats);
 		
 		//onglet assistance :
 		onglets.addTab("ASSISTANCE", OngletAssist.CreerOngletAssist());
@@ -99,12 +81,5 @@ public class FenetreAero extends JFrame {
 		this.add(onglets);
 		this.setVisible(true);
 	}
-	
-	//---Test de refresh---	
-//	public static void refresh() {
-//		onglet1.removeAll();
-//		onglet1.validate();
-//		onglet1.revalidate();
-//		onglet1.repaint();
-//	}
+
 }
