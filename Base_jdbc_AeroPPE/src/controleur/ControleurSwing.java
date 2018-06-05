@@ -110,4 +110,28 @@ public class ControleurSwing {
 		calender.setTime(date);
 		return calender;
 	}
+	
+	public String readVol(int id) {
+		Vol vol = new Vol(null, null, null, null, null, null) ;
+		vol.setNumVol(id);
+		VolDAO volDao = VolDAO.getInstance();
+		vol = volDao.read(id);
+		return vol.toString();
+	}
+	
+	public String readAvion(int id) {
+		Avion avion = new Avion(null, 0, null);
+		avion.setNumAv(id);
+		AvionDAO avionDao = AvionDAO.getInstance();
+		avion = avionDao.read(id);
+		return avion.toString();
+	}
+	
+	public String readPilote(int id) {
+		Pilote pilote = new Pilote(null, null, 0);
+		pilote.setNumPil(id);
+		PiloteDAO piloteDao = PiloteDAO.getInstance();
+		pilote = piloteDao.read(id);
+		return pilote.toString();
+	}
 }

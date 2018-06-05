@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controleur.swing.CreateAvion;
 import controleur.swing.DeleteAvion;
+import controleur.swing.ReadAvion;
 import controleur.swing.UpdateAvion;
 import dao.Connexion;
 import ihm.swing.JTableRenderer;
@@ -116,8 +117,7 @@ public class OngletAvion extends JPanel {
 		ActionListener alRecherche = new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {	
-				//à finaliser
-				//new FindAvion();
+				new ReadAvion();
 			}
 		};
 		rechercher.addActionListener(alRecherche);

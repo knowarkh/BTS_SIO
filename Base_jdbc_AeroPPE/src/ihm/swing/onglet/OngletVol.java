@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controleur.swing.CreateVol;
 import controleur.swing.DeleteVol;
+import controleur.swing.ReadVol;
 import controleur.swing.UpdateVol;
 import dao.Connexion;
 import ihm.swing.JTableRenderer;
@@ -120,7 +121,7 @@ public class OngletVol extends JPanel {
 		ActionListener alRecherche = new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {	
-				//new FindVol();
+				new ReadVol();
 			}
 		};
 		rechercher.addActionListener(alRecherche);

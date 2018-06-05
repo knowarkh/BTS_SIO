@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controleur.swing.CreatePilote;
 import controleur.swing.DeletePilote;
+import controleur.swing.ReadPilote;
 import controleur.swing.UpdatePilote;
 import dao.Connexion;
 import ihm.swing.JTableRenderer;
@@ -114,7 +115,7 @@ public class OngletPilote extends JPanel {
 		ActionListener alRecherche = new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {	
-				//new FindPilote();
+				new ReadPilote();
 			}
 		};
 		rechercher.addActionListener(alRecherche);

@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
+import dao.Connexion;
 import ihm.swing.onglet.OngletAccueil;
 import ihm.swing.onglet.OngletAssist;
 import ihm.swing.onglet.OngletAvion;
@@ -34,7 +35,8 @@ public class FenetreAero extends JFrame {
 		//Ici on crée un nouvel objet et on extends directement la class en faisant comme un overide après les crochets :
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e){
-				System.exit(0);
+				Connexion.fermer();
+				System.exit(0);	
 			}
 		};
 		addWindowListener(l);
